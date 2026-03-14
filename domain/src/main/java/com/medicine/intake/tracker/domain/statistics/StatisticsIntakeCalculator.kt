@@ -18,11 +18,15 @@ class StatisticsIntakeCalculator(
             date.minusDays(1)
         }
     }
-    fun getDailyIntakeCounts(intakes: List<Intake>): Map<LocalDate, Int> {
+    fun getDailyIntakeCounts(intakesPerDay: Int, intakes: List<Intake>): Map<LocalDate, Int> {
+        val localDateNow = LocalDate.now()
         return intakes
             .map { getLocalDate(it) }
             .groupingBy { it }
             .eachCount()
+            .filter { (date, count) ->
+                (date != localDateNow || count >= intakesPerDay)
+            }
     }
 
     fun convertIntakesToLocalDateTimes(intakes: List<Intake>): List<LocalDateTime> {

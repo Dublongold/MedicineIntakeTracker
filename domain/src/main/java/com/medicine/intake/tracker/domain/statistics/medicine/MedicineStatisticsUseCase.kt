@@ -37,7 +37,6 @@ class MedicineStatisticsUseCase(
         medicineCalculator.getMedicineAdherence(
             medicine = medicine,
             intakes = intakes
-
         )
     }
 
@@ -48,7 +47,10 @@ class MedicineStatisticsUseCase(
         )
     }
 
-    fun getMedicineAverageIntakesPerDay() = intakeCalculator.getDailyIntakeCounts(medicineIntakes())
+    fun getMedicineAverageIntakesPerDay() = intakeCalculator.getDailyIntakeCounts(
+        medicines.first { it.id == currentMedicineId }.intakesPerDay,
+        medicineIntakes(),
+    )
         .values.average().toFloat().let {
             if (it.isNaN()) 0f else it
         }

@@ -10,7 +10,8 @@ class StatisticsMedicineCalculator(private val intakeCalculator: StatisticsIntak
         medicine: Medicine,
         intakes: List<Intake>,
     ): Int {
-        val dailyCounts = intakeCalculator.getDailyIntakeCounts(intakes).toSortedMap()
+        val dailyCounts =
+            intakeCalculator.getDailyIntakeCounts(medicine.intakesPerDay, intakes).toSortedMap()
 
         var bestStreak = 0
         var currentStreak = 0
@@ -38,10 +39,13 @@ class StatisticsMedicineCalculator(private val intakeCalculator: StatisticsIntak
         intakes: List<Intake>,
     ): Float {
         val allDatesWithIntakesCount = intakeCalculator.getDailyIntakeCounts(
+            medicine.intakesPerDay,
             intakes = intakes
         )
         val allDates = allDatesWithIntakesCount.keys
-        val validDates = allDatesWithIntakesCount.filter { it.value >= medicine.intakesPerDay }.keys
+
+        val validDates = allDatesWithIntakesCount
+            .filter { it.value >= medicine.intakesPerDay }.keys
 
         if (validDates.isEmpty()) return 0f
 
