@@ -1,9 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 android {
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
     namespace = "com.medicine.intake.tracker.data"
     compileSdk {
         version = release(36) {

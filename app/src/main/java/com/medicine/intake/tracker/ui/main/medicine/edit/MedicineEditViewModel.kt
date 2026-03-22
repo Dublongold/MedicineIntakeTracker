@@ -11,27 +11,28 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/**
+ * First value: An id of the medicine to edit, null if creating a new one.
+ * Second value: True if loaded, false if not.
+ */
 class MedicineEditViewModel(
     private val repository: MedicineRepository
 ) : ViewModel() {
-    private val _medicineToEditId = MutableStateFlow<MedicineId?>(null)
+    private val _medicineToEditId = MutableStateFlow<MedicineIdToEdit?>(null)
 
     val state = combine(
         _medicineToEditId,
         repository.medicines
-    ) { id, medicines ->
-        if (id == null) {
+    ) { medicineIdToEdit, medicines ->
+        if (medicineIdToEdit == null) {
             return@combine MedicineEditUiState.Loading
         }
-        MedicineEditUiState.Edit(medicines.find { id == it.id })
+
+        MedicineEditUiState.Edit(medicines.find { medicineIdToEdit.id == it.id })
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), MedicineEditUiState.Loading)
 
-    fun loadMedicine(id: MedicineId) {
-        _medicineToEditId.value = id
-    }
-
-    fun setUpToCreateMedicine() {
-        _medicineToEditId.value = -1
+    fun loadMedicine(id: MedicineId?) {
+        _medicineToEditId.value = MedicineIdToEdit(id)
     }
 
     fun editOrAddMedicine(

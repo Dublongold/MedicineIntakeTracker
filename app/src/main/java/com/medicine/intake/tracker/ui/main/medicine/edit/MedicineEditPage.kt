@@ -63,17 +63,12 @@ fun MedicineEditPage(
     modifier: Modifier = Modifier,
     viewModel: MedicineEditViewModel = koinViewModel()
 ) {
-    val state = run {
-        if (medicineId == null) {
-            MedicineEditUiState.Edit(null)
-        } else {
-            LaunchedEffect(medicineId, viewModel) {
-                viewModel.loadMedicine(medicineId)
-            }
-            val state by viewModel.state.collectAsState()
-            state
-        }
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(medicineId, viewModel) {
+        viewModel.loadMedicine(medicineId)
     }
+
     val modifier = modifier
         .fillMaxSize()
     when (val state = state) {

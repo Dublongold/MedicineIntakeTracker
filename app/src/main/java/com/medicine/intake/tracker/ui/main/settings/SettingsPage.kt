@@ -43,6 +43,8 @@ import com.medicine.intake.tracker.domain.settings.FakeSettingsRepository
 import com.medicine.intake.tracker.domain.settings.Language
 import com.medicine.intake.tracker.domain.settings.Theme
 import com.medicine.intake.tracker.ui.composable.LoadingPlaceholder
+import com.medicine.intake.tracker.ui.main.settings.dialog.ClearAllDataDialog
+import com.medicine.intake.tracker.ui.main.settings.dialog.ClearAllIntakesDialog
 import com.medicine.intake.tracker.ui.theme.LocalDimensions
 import org.koin.compose.viewmodel.koinViewModel
 

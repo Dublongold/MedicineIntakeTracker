@@ -1,4 +1,4 @@
-package com.medicine.intake.tracker.ui.main.medicine
+package com.medicine.intake.tracker.ui.main.medicine.dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,12 +20,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.medicine.intake.tracker.R
 import com.medicine.intake.tracker.domain.medicine.Medicine
 import com.medicine.intake.tracker.domain.medicine.MedicineIcon
+import com.medicine.intake.tracker.ui.main.medicine.contentDescription
+import com.medicine.intake.tracker.ui.main.medicine.painter
 import com.medicine.intake.tracker.ui.theme.LocalDimensions
 
 @Composable
 fun MedicineDialog(
     medicine: Medicine,
     onDismissRequest: () -> Unit,
+    onCompletedChanged: (Boolean) -> Unit,
     onEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -50,6 +57,10 @@ fun MedicineDialog(
                 Text(
                     text = intakesPerDay, textAlign = TextAlign.Center
                 )
+                MedicineCompleteOption(
+                    isCompleted = medicine.isCompleted,
+                    onCompletedChanged = onCompletedChanged
+                )
             }
         },
         icon = medicine.icon?.let { icon ->
@@ -76,17 +87,25 @@ fun MedicineDialog(
 @Preview
 @Composable
 private fun MedicineDialogPreview() {
-    MedicineDialog(
-        medicine = Medicine(
-            0,
-            name = "Medicine Name",
-            description = "Medicine Description",
+    var medicine by remember {
+        mutableStateOf(
+            Medicine(
+                0,
+                name = "Medicine Name",
+                description = "Medicine Description",
 //            description = "Very Long Medicine Description That The User Made For No Reason",
 //            description = null,
-            intakesPerDay = 3,
-            icon = MedicineIcon.Bottle
-        ),
+                intakesPerDay = 3,
+                icon = MedicineIcon.Bottle
+            )
+        )
+    }
+    MedicineDialog(
+        medicine = medicine,
         onDismissRequest = {},
+        onCompletedChanged = {
+            medicine = medicine.copy(isCompleted = it)
+        },
         onEditClick = {},
     )
 }

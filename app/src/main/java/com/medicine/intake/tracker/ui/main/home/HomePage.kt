@@ -59,6 +59,7 @@ import com.medicine.intake.tracker.domain.settings.FakeSettingsRepository
 import com.medicine.intake.tracker.ui.composable.IntakeItem
 import com.medicine.intake.tracker.ui.composable.LoadingPlaceholder
 import com.medicine.intake.tracker.ui.composable.medicine.MedicineAwareContent
+import com.medicine.intake.tracker.ui.main.home.dialog.AddCustomIntakeDialog
 import com.medicine.intake.tracker.ui.theme.LocalDimensions
 import org.koin.compose.viewmodel.koinViewModel
 

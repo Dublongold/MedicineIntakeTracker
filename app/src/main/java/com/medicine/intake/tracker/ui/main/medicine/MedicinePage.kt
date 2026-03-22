@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.medicine.intake.tracker.R
 import com.medicine.intake.tracker.domain.medicine.FakeMedicineRepository
-import com.medicine.intake.tracker.domain.medicine.Medicine
 import com.medicine.intake.tracker.domain.medicine.MedicineId
 import com.medicine.intake.tracker.ui.composable.LoadingPlaceholder
+import com.medicine.intake.tracker.ui.main.medicine.dialog.MedicineDialog
 import com.medicine.intake.tracker.ui.theme.LocalDimensions
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -40,8 +40,9 @@ fun MedicinePage(
     viewModel: MedicineViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    var currentMedicineDetails: Medicine? by remember { mutableStateOf(null) }
-    var medicineToDelete: Medicine? by remember { mutableStateOf(null) }
+    val medicines = (state as? MedicineUiState.Loaded)?.medicines ?: emptyList()
+    var idOfCurrentMedicineDetails: MedicineId? by remember { mutableStateOf(null) }
+    var idOfMedicineToDelete: MedicineId? by remember { mutableStateOf(null) }
     when (val state = state) {
         is MedicineUiState.Loaded -> {
             Box(modifier.fillMaxSize(), Alignment.Center) {
@@ -70,10 +71,10 @@ fun MedicinePage(
                                 if (state.selectedMedicineId != medicine.id) {
                                     viewModel.updateCurrentMedicineId(medicine.id)
                                 } else {
-                                    currentMedicineDetails = medicine
+                                    idOfCurrentMedicineDetails = medicine.id
                                 }
                             }, onDeleteClick = {
-                                medicineToDelete = medicine
+                                idOfMedicineToDelete = medicine.id
                             }, highlight = state.selectedMedicineId == medicine.id)
                         }
                     }
@@ -104,24 +105,29 @@ fun MedicinePage(
             LoadingPlaceholder(modifier)
         }
     }
+    val currentMedicineDetails = medicines.find { idOfCurrentMedicineDetails == it.id }
     currentMedicineDetails?.also { medicine ->
         MedicineDialog(
             medicine = medicine,
-            onDismissRequest = { currentMedicineDetails = null },
+            onDismissRequest = { idOfCurrentMedicineDetails = null },
+            onCompletedChanged = { isCompleted ->
+                viewModel.updateMedicineCompleted(medicine, isCompleted)
+            },
             onEditClick = {
                 onEdit(medicine.id)
-                currentMedicineDetails = null
+                idOfCurrentMedicineDetails = null
             })
     }
+    val medicineToDelete = medicines.find { idOfMedicineToDelete == it.id }
     medicineToDelete?.also { medicine ->
         DeleteMedicineDialog(
             medicine = medicine,
             onDelete = {
                 viewModel.deleteMedicine(medicine)
-                medicineToDelete = null
+                idOfMedicineToDelete = null
             },
             onDismissRequest = {
-                medicineToDelete = null
+                idOfMedicineToDelete = null
             }
         )
     }
@@ -134,9 +140,10 @@ private fun MedicinePagePreview() {
         MedicinePage(onEdit = {}, modifier = Modifier.padding(it), viewModel = viewModel {
             val medicineRepository = FakeMedicineRepository.withFakeData()
             MedicineViewModel(
-                medicineRepository,
+                medicineProvider = medicineRepository,
                 currentMedicineIdUpdater = medicineRepository,
-                medicineDeleter = medicineRepository
+                medicineDeleter = medicineRepository,
+                medicineWriter = medicineRepository,
             )
         })
     }

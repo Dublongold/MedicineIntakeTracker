@@ -1,5 +1,6 @@
 package com.medicine.intake.tracker.data.medicine
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -16,5 +17,7 @@ data class MedicineEntity(
     val description: String?,
     val intakesPerDay: Int,
     val icon: MedicineIcon?,
+    @ColumnInfo(defaultValue = "false")
+    val isCompleted: Boolean,
 )
 

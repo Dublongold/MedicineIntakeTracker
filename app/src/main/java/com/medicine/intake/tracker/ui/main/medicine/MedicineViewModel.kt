@@ -7,7 +7,7 @@ import com.medicine.intake.tracker.domain.medicine.Medicine
 import com.medicine.intake.tracker.domain.medicine.MedicineDeleter
 import com.medicine.intake.tracker.domain.medicine.MedicineId
 import com.medicine.intake.tracker.domain.medicine.MedicineProvider
-import com.medicine.intake.tracker.domain.medicine.MedicineRepository
+import com.medicine.intake.tracker.domain.medicine.MedicineWriter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -17,6 +17,7 @@ class MedicineViewModel(
     medicineProvider: MedicineProvider,
     private val currentMedicineIdUpdater: CurrentMedicineIdUpdater,
     private val medicineDeleter: MedicineDeleter,
+    private val medicineWriter: MedicineWriter
 ) : ViewModel() {
     val state = combine(
         medicineProvider.currentMedicineId,
@@ -34,6 +35,16 @@ class MedicineViewModel(
     fun updateCurrentMedicineId(id: MedicineId) {
         viewModelScope.launch {
             currentMedicineIdUpdater.updateCurrentMedicineId(id)
+        }
+    }
+
+    fun updateMedicineCompleted(medicine: Medicine, isCompleted: Boolean) {
+        viewModelScope.launch {
+            medicineWriter.upsertMedicine(
+                medicine.copy(
+                    isCompleted = isCompleted
+                )
+            )
         }
     }
 

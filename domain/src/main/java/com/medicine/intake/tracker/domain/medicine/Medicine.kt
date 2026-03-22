@@ -6,4 +6,5 @@ data class Medicine(
     val description: String?,
     val intakesPerDay: Int,
     val icon: MedicineIcon?,
+    val isCompleted: Boolean = false,
 )

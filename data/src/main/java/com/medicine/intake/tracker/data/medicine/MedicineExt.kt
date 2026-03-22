@@ -7,7 +7,8 @@ fun MedicineEntity.toDomain(): Medicine = Medicine(
     name = name,
     description = description,
     intakesPerDay = intakesPerDay,
-    icon = icon
+    icon = icon,
+    isCompleted = isCompleted
 )
 
 fun Medicine.toEntity(): MedicineEntity = MedicineEntity(
@@ -15,5 +16,6 @@ fun Medicine.toEntity(): MedicineEntity = MedicineEntity(
     name = name,
     description = description,
     intakesPerDay = intakesPerDay,
-    icon = icon
+    icon = icon,
+    isCompleted = isCompleted,
 )
