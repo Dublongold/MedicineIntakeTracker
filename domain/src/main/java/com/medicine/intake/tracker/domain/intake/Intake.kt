@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 data class Intake(
-    val id: Int = 0,
+    val id: IntakeId = 0,
     val date: String,
     val time: String,
     val medicineId: MedicineId,

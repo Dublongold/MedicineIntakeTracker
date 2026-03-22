@@ -1,6 +1,5 @@
 package com.medicine.intake.tracker.domain.intake
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,14 +12,21 @@ class FakeIntakeRepository(
         fun withFakeData(): FakeIntakeRepository {
             return FakeIntakeRepository(createFakeIntakes())
         }
+        var LAST_INTAKE_ID = 0
     }
 
     private val _intakes = MutableStateFlow(initialIntakes)
     override val sortedIntakes = _intakes.asStateFlow()
 
     override suspend fun addIntake(intake: Intake) {
+        val intake = if (intake.id == 0) {
+            intake.copy(id = ++LAST_INTAKE_ID)
+        } else {
+            intake
+        }
         _intakes.update { currentList ->
-            currentList + intake
+            (currentList + intake).sortedWith(compareByDescending<Intake> { it.date }.thenByDescending { it.time }
+                .thenByDescending { it.medicineId })
         }
     }
 

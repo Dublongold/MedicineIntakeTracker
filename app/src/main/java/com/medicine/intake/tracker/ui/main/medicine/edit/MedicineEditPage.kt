@@ -49,7 +49,7 @@ import com.medicine.intake.tracker.domain.medicine.Medicine
 import com.medicine.intake.tracker.domain.medicine.MedicineIcon
 import com.medicine.intake.tracker.domain.medicine.MedicineId
 import com.medicine.intake.tracker.ui.composable.LoadingPlaceholder
-import com.medicine.intake.tracker.ui.main.medicine.DeleteMedicineDialog
+import com.medicine.intake.tracker.ui.main.medicine.dialog.DeleteMedicineDialog
 import com.medicine.intake.tracker.ui.main.medicine.contentDescription
 import com.medicine.intake.tracker.ui.main.medicine.painter
 import com.medicine.intake.tracker.ui.theme.LocalDimensions

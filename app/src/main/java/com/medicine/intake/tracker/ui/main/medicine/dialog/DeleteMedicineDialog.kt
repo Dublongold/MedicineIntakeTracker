@@ -1,4 +1,4 @@
-package com.medicine.intake.tracker.ui.main.medicine
+package com.medicine.intake.tracker.ui.main.medicine.dialog
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
@@ -15,6 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.medicine.intake.tracker.R
 import com.medicine.intake.tracker.domain.medicine.Medicine
 import com.medicine.intake.tracker.domain.medicine.createFakeMedicines
+import com.medicine.intake.tracker.ui.composable.CancelTextButton
+import com.medicine.intake.tracker.ui.main.medicine.contentDescription
+import com.medicine.intake.tracker.ui.main.medicine.painter
 
 @Composable
 fun DeleteMedicineDialog(
@@ -23,21 +26,16 @@ fun DeleteMedicineDialog(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val title = stringResource(R.string.medicine_delete_dialog_title)
-    val message = stringResource(R.string.medicine_delete_dialog_message, medicine.name)
-    val iconContentDescription = medicine.icon?.contentDescription
-    val actionDelete = stringResource(R.string.action_delete)
-    val actionCancel = stringResource(R.string.action_cancel)
     AlertDialog(
         onDismissRequest = onDelete,
         modifier = modifier,
-        title = { Text(title) },
-        text = { Text(message) },
+        title = { Text(stringResource(R.string.medicine_delete_dialog_title)) },
+        text = { Text(stringResource(R.string.medicine_delete_dialog_message, medicine.name)) },
         icon = medicine.icon?.let {
             {
                 Icon(
                     it.painter,
-                    iconContentDescription,
+                    medicine.icon?.contentDescription,
                     tint = MaterialTheme.colorScheme.error,
                     modifier = Modifier.size(48.dp)
                 )
@@ -45,13 +43,11 @@ fun DeleteMedicineDialog(
         },
         confirmButton = {
             TextButton(onClick = onDelete) {
-                Text(actionDelete, color = MaterialTheme.colorScheme.error)
+                Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(actionCancel)
-            }
+            CancelTextButton(onClick = onDismissRequest)
         })
 }
 

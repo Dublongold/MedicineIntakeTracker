@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.medicine.intake.tracker.data.medicine.MedicineEntity
+import com.medicine.intake.tracker.domain.intake.IntakeId
 import com.medicine.intake.tracker.domain.medicine.MedicineId
 
 @Entity(
@@ -21,7 +22,7 @@ import com.medicine.intake.tracker.domain.medicine.MedicineId
     )]
 )
 data class IntakeEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: IntakeId = 0,
     val date: String,
     val time: String,
     val medicineId: MedicineId,

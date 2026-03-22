@@ -32,56 +32,43 @@ fun MedicineDialog(
     onEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val intakesPerDay = stringResource(
-        R.string.medicine_intakes_per_day,
-        medicine.intakesPerDay
-    )
-    val actionEdit = stringResource(R.string.action_edit)
-    val actionClose = stringResource(R.string.action_close)
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        modifier = modifier,
-        title = {
-            Text(text = medicine.name, Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-        },
-        text = {
-            Column(
-                Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(LocalDimensions.current.listSpacing),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                val description = medicine.description
-                if (description != null) {
-                    Text(text = description, textAlign = TextAlign.Center)
-                }
-                Text(
-                    text = intakesPerDay, textAlign = TextAlign.Center
-                )
-                MedicineCompleteOption(
-                    isCompleted = medicine.isCompleted,
-                    onCompletedChanged = onCompletedChanged
-                )
+    AlertDialog(onDismissRequest = onDismissRequest, modifier = modifier, title = {
+        Text(text = medicine.name, Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+    }, text = {
+        Column(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(LocalDimensions.current.listSpacing),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            val description = medicine.description
+            if (description != null) {
+                Text(text = description, textAlign = TextAlign.Center)
             }
-        },
-        icon = medicine.icon?.let { icon ->
-            {
-                Icon(
-                    icon.painter,
-                    icon.contentDescription,
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onEditClick) {
-                Text(actionEdit)
-            }
-        },
-        dismissButton = {
-            TextButton(onDismissRequest) {
-                Text(actionClose)
-            }
+            Text(
+                text = stringResource(
+                    R.string.medicine_intakes_per_day, medicine.intakesPerDay
+                ), textAlign = TextAlign.Center
+            )
+            MedicineCompleteOption(
+                isCompleted = medicine.isCompleted, onCompletedChanged = onCompletedChanged
+            )
         }
-    )
+    }, icon = medicine.icon?.let { icon ->
+        {
+            Icon(
+                icon.painter,
+                icon.contentDescription,
+            )
+        }
+    }, confirmButton = {
+        TextButton(onClick = onEditClick) {
+            Text(stringResource(R.string.action_edit))
+        }
+    }, dismissButton = {
+        TextButton(onDismissRequest) {
+            Text(stringResource(R.string.action_close))
+        }
+    })
 }
 
 @Preview
@@ -90,13 +77,10 @@ private fun MedicineDialogPreview() {
     var medicine by remember {
         mutableStateOf(
             Medicine(
-                0,
-                name = "Medicine Name",
-                description = "Medicine Description",
+                0, name = "Medicine Name", description = "Medicine Description",
 //            description = "Very Long Medicine Description That The User Made For No Reason",
 //            description = null,
-                intakesPerDay = 3,
-                icon = MedicineIcon.Bottle
+                intakesPerDay = 3, icon = MedicineIcon.Bottle
             )
         )
     }

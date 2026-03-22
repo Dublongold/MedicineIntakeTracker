@@ -21,6 +21,9 @@ class GeneralStatisticsUseCase(
             .take(5)
 
     fun getTotalIntakesCount() = intakes.size
+    fun getNumberOfCompletedMedicines() = medicines.count { medicine ->
+        medicine.isCompleted
+    }
     fun medicinesWithIntakes() =
         intakes.groupBy { it.medicineId }.mapKeys { (key, _) -> medicines.first { it.id == key } }
 
@@ -60,6 +63,7 @@ class GeneralStatisticsUseCase(
 
     fun createState() = GeneralStatisticsState(
         totalIntakesCount = getTotalIntakesCount(),
+        numberOfCompletedMedicines = getNumberOfCompletedMedicines(),
         medicineWithBestStreak = getMedicineWithBestStreak(),
         medicineWithBestAdherence = getMedicineWithBestAdherence(),
         topMedicinesWithMostIntakes = getTopMedicinesWithMostIntakes(),

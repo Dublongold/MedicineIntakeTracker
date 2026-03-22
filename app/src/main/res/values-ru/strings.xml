@@ -15,7 +15,7 @@
     <string name="settings_launguage">Язык</string>
     <string name="action_delete">Удалить</string>
     <string name="home_delete_intake_dialog_title">Удалить приём?</string>
-    <string name="home_delete_intake_dialog_message">Вы уверены, что хотите удалить этот приём кальция?</string>
+    <string name="home_delete_intake_dialog_message">Вы уверены, что хотите удалить приём \"%s\" на %s в %s?</string>
     <string name="home_recent_intakes">Недавние приёмы</string>
     <string name="home_full_history">Вся история</string>
     <string name="home_intake_unavailable"><![CDATA[Приём недоступен (прошло < 2 часов)]]></string>
@@ -25,7 +25,7 @@
     <string name="main_page_settings">Настройки</string>
     <string name="main_page_error">Ошибка</string>
     <string name="history_is_empty">История пустая…</string>
-    <string name="home_no_recent_intakes_for">Нет недавних приёмов препарата \"%s\"…</string>
+    <string name="home_no_recent_intakes_for">Нет недавних приёмов \"%s\"…</string>
     <string name="action_edit">Редактировать</string>
     <string name="medicine_intakes_per_day">%d приёмов в день</string>
     <string name="action_create">Создать</string>
@@ -85,4 +85,12 @@
     <string name="home_add_custom_intake_dialog_bad_time">Время следует указывать в формате ЧЧ:мм!</string>
     <string name="home_add_custom_intake_dialog_date_label">Дата</string>
     <string name="home_add_custom_intake_dialog_time_label">Время</string>
+    <string name="statistics_general_medicines_completed">Количество препаратов c завершённым приёмом</string>
+    <string name="medicine_dialog_is_completed">Приём завершён?</string>
+    <string name="home_intakes_limit_dialog_title">Принять \"%s\"?</string>
+    <string name="home_intakes_limit_dialog_message">Вы достигли вашего дневного лимита в размере %d раз для \"%s\". Вы в любом случае хотите совершить прийём препарата?</string>
+    <string name="action_yes">Да</string>
+    <string name="action_no">Нет</string>
+    <string name="home_delete_intake_dialog_for_today">сегодня</string>
+    <string name="home_delete_intake_dialog_message_for_today">Вы уверены, что хотите удалить сегодняшний приём препарата \"%s\" в %s?</string>
 </resources>

@@ -34,8 +34,8 @@ class FakeMedicineRepository(
             currentId ?: medicines.firstOrNull()?.id
         }
 
-    override suspend fun updateCurrentMedicineId(id: MedicineId?) {
-        _currentMedicineId.value = id
+    override suspend fun updateCurrentMedicineId(medicineId: MedicineId?) {
+        _currentMedicineId.value = medicineId
     }
 
     override suspend fun upsertMedicine(medicine: Medicine): Boolean {

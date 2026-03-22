@@ -1,5 +1,6 @@
 package com.medicine.intake.tracker.ui.main.medicine.dialog
 
+import android.R.attr.label
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -15,9 +16,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.medicine.intake.tracker.R
 import com.medicine.intake.tracker.ui.theme.LocalDimensions
 
+/**
+ * A simple [OutlinedCard] with a [Checkbox] to indicate whether the medicine is completed or not.
+ * For now, is used by [MedicineDialog].
+ * PS: [label] is moved to parameters due to the issue that
+ * [AlertDialog][androidx.compose.material3.AlertDialog] uses device locale, ignoring the
+ * locale of [LocalContext][androidx.compose.ui.platform.LocalContext]. Maybe, I'll fix it in the
+ * future.
+ */
 @Composable
 fun MedicineCompleteOption(
     isCompleted: Boolean,
@@ -39,7 +50,7 @@ fun MedicineCompleteOption(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Is completed?")
+            Text(stringResource(R.string.medicine_dialog_is_completed))
             Checkbox(
                 checked = isCompleted,
                 onCheckedChange = onCompletedChanged,

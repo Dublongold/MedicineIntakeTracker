@@ -2,15 +2,19 @@ package com.medicine.intake.tracker
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,6 +23,8 @@ import com.medicine.intake.tracker.domain.settings.SettingsDefaults
 import com.medicine.intake.tracker.domain.settings.Theme
 import com.medicine.intake.tracker.ui.navigation.AppNavigation
 import com.medicine.intake.tracker.ui.theme.CalciumIntakeTrackerTheme
+import com.medicine.intake.tracker.util.rememberLayoutDirection
+import com.medicine.intake.tracker.util.tag
 import com.medicine.intake.tracker.util.updateLocale
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -39,7 +45,7 @@ private val autoStatusBarStyle = SystemBarStyle.auto(
 )
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     private fun Theme.enableEdgeToEdge() {
         when (this) {
             Theme.System -> enableEdgeToEdge(autoStatusBarStyle, autoStatusBarStyle)
@@ -69,6 +75,19 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.language.collect {
+                    val languageTag = it.tag
+                    if (languageTag != null) {
+                        val appLocale = LocaleListCompat.forLanguageTags(languageTag)
+                        AppCompatDelegate.setApplicationLocales(appLocale)
+                    } else {
+                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
+                    }
+                }
+            }
+        }
         setContent {
             val theme by viewModel.theme.collectAsState(
                 savedInstanceState?.getString("theme")?.let {
@@ -83,7 +102,12 @@ class MainActivity : ComponentActivity() {
             val updatedContext = remember(language, this) {
                 updateLocale(language)
             }
-            CompositionLocalProvider(LocalContext provides updatedContext) {
+            val layoutDirection = rememberLayoutDirection(language)
+            CompositionLocalProvider(
+                LocalContext provides updatedContext,
+                LocalConfiguration provides updatedContext.resources.configuration,
+                LocalLayoutDirection provides layoutDirection
+            ) {
                 CalciumIntakeTrackerTheme(theme = theme) {
                     AppNavigation()
                 }

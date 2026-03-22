@@ -1,4 +1,4 @@
-package com.medicine.intake.tracker.ui.composable
+package com.medicine.intake.tracker.ui.composable.dialog
 
 import android.text.format.DateFormat
 import androidx.compose.animation.AnimatedVisibility
@@ -30,9 +30,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.medicine.intake.tracker.R
 import com.medicine.intake.tracker.domain.intake.IntakeMapper
+import com.medicine.intake.tracker.ui.composable.CancelTextButton
+import com.medicine.intake.tracker.ui.composable.invalidTimeText
 import com.medicine.intake.tracker.ui.theme.LocalDimensions
 import java.time.LocalTime
-import kotlin.math.max
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,23 +45,14 @@ fun TimeSelectionDialog(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val is24Hour = DateFormat.is24HourFormat(LocalContext.current)
     val context = LocalContext.current
     val state = remember(context) {
         TimePickerState(
             initialHour = current.hour,
             initialMinute = current.minute,
-            is24Hour = is24Hour
+            is24Hour = DateFormat.is24HourFormat(context)
         )
     }
-    val title = stringResource(R.string.time_selection_dialog_title)
-    val invalidTime = invalidTimeText(
-        min = min?.let { IntakeMapper.localTimeToString(it) },
-        max = max?.let { IntakeMapper.localTimeToString(it) },
-        current = IntakeMapper.timeUnitsToString(hours = state.hour, minutes = state.minute)
-    )
-    val actionConfirm = stringResource(R.string.action_confirm)
-    val actionCancel = stringResource(R.string.action_cancel)
     var badTime by remember { mutableStateOf(false) }
     LaunchedEffect(state.hour, state.minute) {
         badTime = false
@@ -71,32 +63,25 @@ fun TimeSelectionDialog(
         confirmButton = {
             AlertDialogDefaults.TonalElevation
             TextButton({
-                val time = IntakeMapper.timeUnitsToString(
-                    state.hour,
-                    state.minute
-                )
-                val localTime = IntakeMapper.stringToLocalTime(time)
-
-                val min = min ?: LocalTime.MIN
-                val max = max ?: LocalTime.MAX
-
-                if (localTime in min..max) {
+                val time = validateTimeSelectionTime(state.hour, state.minute, min, max)
+                if (time != null) {
                     onConfirm(time)
                 } else {
                     badTime = true
                 }
 
             }) {
-                Text(actionConfirm)
+                Text(stringResource(R.string.action_confirm))
             }
         },
         dismissButton = {
-            TextButton(onDismissRequest) {
-                Text(actionCancel)
-            }
+            CancelTextButton(onClick = onDismissRequest)
         },
         title = {
-            Text(title, style = MaterialTheme.typography.titleLarge)
+            Text(
+                stringResource(R.string.time_selection_dialog_title),
+                style = MaterialTheme.typography.titleLarge
+            )
         },
         content = {
             Column(
@@ -112,7 +97,14 @@ fun TimeSelectionDialog(
                 )
                 AnimatedVisibility(badTime) {
                     Text(
-                        text = invalidTime,
+                        text = invalidTimeText(
+                            min = min?.let { IntakeMapper.localTimeToString(it) },
+                            max = max?.let { IntakeMapper.localTimeToString(it) },
+                            current = IntakeMapper.timeUnitsToString(
+                                hours = state.hour,
+                                minutes = state.minute
+                            )
+                        ),
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.fillMaxWidth()
                     )

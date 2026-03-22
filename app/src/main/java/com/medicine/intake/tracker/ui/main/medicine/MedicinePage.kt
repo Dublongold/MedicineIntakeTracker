@@ -29,6 +29,7 @@ import com.medicine.intake.tracker.R
 import com.medicine.intake.tracker.domain.medicine.FakeMedicineRepository
 import com.medicine.intake.tracker.domain.medicine.MedicineId
 import com.medicine.intake.tracker.ui.composable.LoadingPlaceholder
+import com.medicine.intake.tracker.ui.main.medicine.dialog.DeleteMedicineDialog
 import com.medicine.intake.tracker.ui.main.medicine.dialog.MedicineDialog
 import com.medicine.intake.tracker.ui.theme.LocalDimensions
 import org.koin.compose.viewmodel.koinViewModel

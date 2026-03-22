@@ -14,8 +14,8 @@
     <string name="action_cancel">Скасувати</string>
     <string name="settings_launguage">Мова</string>
     <string name="action_delete">Видалити</string>
-    <string name="home_delete_intake_dialog_title">Видалити пройом?</string>
-    <string name="home_delete_intake_dialog_message">Ви впевнені, що хочете видалити цей прийом кальцію?</string>
+    <string name="home_delete_intake_dialog_title">Видалити прийом?</string>
+    <string name="home_delete_intake_dialog_message">Ви впевнені, що хочете видалити прийом \"%s\" на %s о %s?</string>
     <string name="home_recent_intakes">Недавні прийоми</string>
     <string name="home_full_history">Вся історія</string>
     <string name="home_intake_unavailable"><![CDATA[Прийом недоступний (пройшло < 2 годин)]]></string>
@@ -25,7 +25,7 @@
     <string name="main_page_settings">Налаштування</string>
     <string name="main_page_error">Помилка</string>
     <string name="history_is_empty">Історія порожня…</string>
-    <string name="home_no_recent_intakes_for">Немає недавніх прийомів препарата \"%s\"…</string>
+    <string name="home_no_recent_intakes_for">Немає недавніх прийомів \"%s\"…</string>
     <string name="action_edit">Редагувати</string>
     <string name="medicine_intakes_per_day">%d прийомів в добу</string>
     <string name="action_create">Створити</string>
@@ -85,4 +85,12 @@
     <string name="home_add_custom_intake_dialog_bad_time">Час слід вказувати у форматі ГГ:хх!</string>
     <string name="home_add_custom_intake_dialog_date_label">Дата</string>
     <string name="home_add_custom_intake_dialog_time_label">Час</string>
+    <string name="statistics_general_medicines_completed">Кількість ліків с завершеним прийом</string>
+    <string name="medicine_dialog_is_completed">Прийом закінчений?</string>
+    <string name="home_intakes_limit_dialog_title">Прийняти \"%s\"?</string>
+    <string name="home_intakes_limit_dialog_message">Ви досягли вашого добового ліміту в розмірі %d разів для \"%s\". Ви все одно хочете здійснити прийом ліків?</string>
+    <string name="action_yes">Так</string>
+    <string name="action_no">Ні</string>
+    <string name="home_delete_intake_dialog_for_today">сьогодні</string>
+    <string name="home_delete_intake_dialog_message_for_today">Ви впевнені, що хочете видалити сьогоднішній прийом \"%s\" о %s?</string>
 </resources>

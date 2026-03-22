@@ -101,6 +101,13 @@ fun StatisticsPageGeneralContent(
                         Text(state.totalIntakesCount.toString())
                     }, modifier = itemModifier)
                 }
+                item {
+                    StatisticsItem(label = {
+                        Text(stringResource(R.string.statistics_general_medicines_completed))
+                    }, value = {
+                        Text(state.numberOfCompletedMedicines.toString())
+                    }, modifier = itemModifier)
+                }
                 state.medicineWithBestStreak?.also { medicineWithBestStreak ->
                     item {
                         StatisticsItem(label = {

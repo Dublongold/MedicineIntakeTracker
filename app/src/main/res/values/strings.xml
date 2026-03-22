@@ -17,7 +17,7 @@
     <string name="home_intake_unavailable"><![CDATA[Intake is unavailable (< 2 hours have passed)]]></string>
     <string name="home_take_medicine">Intake \"%s\"\nHold to intake with custom datetime</string>
     <string name="home_delete_intake_dialog_title">Delete intake?</string>
-    <string name="home_delete_intake_dialog_message">Are you sure you want to delete this calcium intake?</string>
+    <string name="home_delete_intake_dialog_message">Are you sure you want to delete an intake of \"%s\" on %s at %s?</string>
     <string name="home_recent_intakes">Recent intakes</string>
     <string name="main_page_home">Home</string>
     <string name="main_page_history">History</string>
@@ -88,4 +88,12 @@
     <string name="home_add_custom_intake_dialog_bad_time">Time should be in HH:mm format!</string>
     <string name="home_add_custom_intake_dialog_date_label">Date</string>
     <string name="home_add_custom_intake_dialog_time_label">Time</string>
+    <string name="statistics_general_medicines_completed">Medicines completed</string>
+    <string name="medicine_dialog_is_completed">Is completed?</string>
+    <string name="home_intakes_limit_dialog_title">Intake %s?</string>
+    <string name="home_intakes_limit_dialog_message">You have reached your daily limit of %d intakes for %s. Do you want to intake anyway?</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
+    <string name="home_delete_intake_dialog_for_today">today</string>
+    <string name="home_delete_intake_dialog_message_for_today">Are you sure you want to delete a today\'s intake of \"%s\" at %s?</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.medicine.intake.tracker.ui.main.home.dialog
+package com.medicine.intake.tracker.ui.main.home.dialog.customintake
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton

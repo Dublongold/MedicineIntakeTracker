@@ -6,14 +6,16 @@ fun createFakeMedicines() = listOf(
         name = "Amoxicillin",
         description = "Antibiotic for bacterial infections",
         intakesPerDay = 3,
-        icon = MedicineIcon.BlisterPills
+        icon = MedicineIcon.BlisterPills,
+        isCompleted = true
     ),
     Medicine(
         id = 2,
         name = "Lisinopril",
         description = "High blood pressure medication",
         intakesPerDay = 1,
-        icon = MedicineIcon.Tablet
+        icon = MedicineIcon.Tablet,
+        isCompleted = true
     ),
     Medicine(
         id = 3,
@@ -34,7 +36,8 @@ fun createFakeMedicines() = listOf(
         name = "Lantus",
         description = "Long-acting insulin injection",
         intakesPerDay = 1,
-        icon = MedicineIcon.Syringe
+        icon = MedicineIcon.Syringe,
+        isCompleted = true
     ),
     Medicine(
         id = 6,

@@ -21,10 +21,6 @@ fun ClearAllDataDialog(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val title = stringResource(R.string.settings_clear_all_data_dialog_title)
-    val message = stringResource(R.string.settings_clear_all_data_dialog_message)
-    val delete = stringResource(R.string.action_clear)
-    val cancel = stringResource(R.string.action_cancel)
     AlertDialog(
         onDismissRequest = onDismissRequest,
         modifier = modifier,
@@ -36,18 +32,18 @@ fun ClearAllDataDialog(
                 tint = MaterialTheme.colorScheme.error,
             )
         },
-        title = { Text(title) },
-        text = { Text(message) },
+        title = { Text(stringResource(R.string.settings_clear_all_data_dialog_title)) },
+        text = { Text(stringResource(R.string.settings_clear_all_data_dialog_message)) },
         confirmButton = {
             TextButton(
                 onClick = onConfirm,
                 colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)
             ) {
-                Text(delete)
+                Text(stringResource(R.string.action_clear))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) { Text(cancel) }
+            TextButton(onClick = onDismissRequest) { Text(stringResource(R.string.action_cancel)) }
         })
 }
 

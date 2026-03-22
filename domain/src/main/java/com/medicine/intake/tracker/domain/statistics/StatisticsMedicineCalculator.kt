@@ -50,7 +50,11 @@ class StatisticsMedicineCalculator(private val intakeCalculator: StatisticsIntak
         if (validDates.isEmpty()) return 0f
 
         val minDate = allDates.minOrNull() ?: return 0f
-        val maxDate = allDates.maxOrNull() ?: return 0f
+        val maxDate = if (medicine.isCompleted) {
+            allDates.maxOrNull() ?: return 0f
+        } else {
+            LocalDate.now()
+        }
 
         val expectedDays = ChronoUnit.DAYS.between(minDate, maxDate).toFloat() + 1f
         val realDays = validDates.size.toFloat()
